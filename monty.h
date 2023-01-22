@@ -63,38 +63,57 @@ extern variables var;
 /*supporting_functions*/
 
 void execute_monty(FILE *fp);
-char get_tokens(char *linestr);
-int init_list(stack_t **stack);
+void get_tokens(char *linestr);
+void init_list(stack_t **stack);
 int checkmode(stack_t **stack);
 void (*get_op(char *opcode))(stack_t**, unsigned int);
 
 
 
 /*opcode_functions*/
-void monty_push(stack_t **stack, unsigned int line number);
-void monty_pall(stack_t **stack, unsigned int line number);
-void monty_pint(stack_t **stack, unsigned int line number);
-void monty_nop(stack_t **stack, unsigned int line number);
-void monty_pop(stack_t **stack, unsigned int line number);
-void monty_swap(stack_t **stack, unsigned int line number);
-void monty_add(stack_t **stack, unsigned int line number);
+void monty_push(stack_t **stack, unsigned int line_number);
+void monty_pall(stack_t **stack, unsigned int line_number);
+void monty_pint(stack_t **stack, unsigned int line_number);
+void monty_nop(stack_t **stack, unsigned int line_number);
+void monty_pop(stack_t **stack, unsigned int line_number);
+void monty_swap(stack_t **stack, unsigned int line_number);
+void monty_add(stack_t **stack, unsigned int line_number);
+void monty_sub(stack_t **stack, unsigned int line_number);
+void monty_div(stack_t **stack, unsigned int line_number);
+void monty_mul(stack_t **stack, unsigned int line_number);
+void monty_mod(stack_t **stack, unsigned int line_number);
+void monty_pchar(stack_t **stack, unsigned int line_number);
+void monty_pstr(stack_t **stack, unsigned int line_number);
+void monty_rotl(stack_t **stack, unsigned int line_number);
+void monty_rotr(stack_t **stack, unsigned int line_number);
+void monty_mode(stack_t **stack, unsigned int line_number);
 
 
 
-/*error_functions*/
-void unknown_error(char *opcode, unsigned int line_number);
-void malloc_error(void);
-void push_error(unsigned int line_number);
-void pint_error(unsigned int line_number);
-void pop_error(unsigned line_number);
-void swap_error(unsigned int line_number);
-void add_error(unsigned int line_number);
+/* error_functions */
+void malloc_error(stack_t **list);
+void push_error(stack_t **list, unsigned int line_number);
+void pint_error(stack_t **list, unsigned int line_number);
+void pop_error(stack_t **list, unsigned int line_number);
+void swap_error(stack_t **list, unsigned int line_number);
+void add_error(stack_t **list, unsigned int line_number);
+void sub_error(stack_t **list, unsigned int line_number);
+void div_error(stack_t **list, unsigned int line_number);
+void mul_error(stack_t **list, unsigned int line_number);
+void mod_error(stack_t **list, unsigned int line_number);
+void pchar_error(stack_t **list, unsigned int line_number);
 
 
 
-/*others functions*/
+/* other functions and utilities */
 int check_arg(char *arg);
 ssize_t getline(char **lineptr, size_t *n, FILE *stream);
+void add_node_queue(stack_t **head, int n);
+void add_node_stack(stack_t **head, int n);
+
+
+/* free memory */
+void free_list(stack_t **list);
 
 
 #endif /*MONTY_H*/
