@@ -8,35 +8,37 @@
 void execute_monty(FILE *fp)
 {
 	char *line = NULL;
-	stack_t *stack;
+	stack_t *list = NULL;
 	size_t n = 0;
 	ssize_t read;
 	unsigned int line_number;
 	void (*opcode_func)(stack_t**, unsigned int);
 
-	init_list(&stack);
-	if (stack == NULL)
-		malloc_error();
-
 	line_number = 0;
 	while ((read = getline(&line, &n, fp)) != -1)
 	{
 		line_number++;
+		if (read == 1)
+			continue;
 		get_tokens(line);
+		if (var.opcode == NULL)
+			continue;
+		if (var.opcode[0] == '#')
+			continue;
 		opcode_func = get_op(var.opcode);
 		if (opcode_func == NULL)
 		{
 			fprintf(stderr, "L%d: unknown instruction %s\n",
 					line_number, var.opcode);
-			/* free memory */
+			free_list(&list);
 			exit(EXIT_FAILURE);
 		}
-		opcode_func(&stack, line_number);
+		opcode_func(&list, line_number);
 	}
-	/* free memory */
-	free(var.opcode);
-	free(var.arg);
+	free(line);
+	free_list(&list);
 }
+
 /**
  * get_tokens - A function that gets monty tokens from monty files
  * @linestr: String Argument
@@ -50,6 +52,7 @@ void get_tokens(char *linestr)
 	token = strtok(NULL, " \n\t\b\a");
 	var.arg = token;
 }
+
 /**
  * init_list - A function that gets token in monty file
  * @stack: Stack Argument
@@ -66,6 +69,7 @@ void init_list(stack_t **stack)
 
 	*stack = s;
 }
+
 /**
  * check_mode - A function that checks monty monty
  * @stack: Stack Argument
@@ -80,11 +84,12 @@ int check_mode(stack_t **stack)
 		return (QUEUE);
 	return (2);
 }
+
 /**
  * get_op - A function that gets monty op code from monty file
  * @opcode: opcode Argument
  *
- * Return: Null
+ * Return: NULL
  */
 void (*get_op(char *opcode))(stack_t**, unsigned int)
 {
@@ -98,6 +103,16 @@ void (*get_op(char *opcode))(stack_t**, unsigned int)
 		{"swap", monty_swap},
 		{"pop", monty_pop},
 		{"nop", monty_nop},
+		{"sub", monty_sub},
+		{"div", monty_div},
+		{"mul", monty_mul},
+		{"mod", monty_mod},
+		{"pchar", monty_pchar},
+		{"pstr", monty_pstr},
+		{"rotl", monty_rotl},
+		{"rotr", monty_rotr},
+		{"queue", monty_mode},
+		{"stack", monty_mode},
 		{NULL, NULL}
 	};
 
