@@ -68,6 +68,14 @@ void add_node_queue(stack_t **head, int n)
 
 	if (*head == NULL || head == NULL)
 	{
+		new->n = n;
+		new->next = NULL;
+		new->prev = NULL;
+		*head = new;
+	}
+	else
+	{
+
 		tmp = *head;
 		while (tmp->next)
 			tmp = tmp->next;
