@@ -56,6 +56,7 @@ typedef struct global_v
 {
 	char *opcode;
 	char *arg;
+	int mode;
 }variables;
 extern variables var;
 
