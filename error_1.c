@@ -2,7 +2,7 @@
 
 /**
  * malloc_error - A function that prints malloc error
- * @List: List Argument
+ * @list: List Argument
  *
  * Return: EXIT_FAILURE
  */
@@ -22,7 +22,7 @@ void malloc_error(stack_t **list)
  */
 void push_error(stack_t **list, unsigned int line_number)
 {
-	fprintf(stderr,"L%d: usage: push integer\n", line_number);
+	fprintf(stderr, "L%d: usage: push integer\n", line_number);
 	free_list(list);
 	exit(EXIT_FAILURE);
 }
@@ -48,7 +48,7 @@ void pint_error(stack_t **list, unsigned int line_number)
  *
  * Return: EXIT_FAILURE
  */
-void pop_error(stack_t **list, unsigned line_number)
+void pop_error(stack_t **list, unsigned int line_number)
 {
 	fprintf(stderr, "L%d: can't pop an empty stack\n", line_number);
 	free_list(list);
